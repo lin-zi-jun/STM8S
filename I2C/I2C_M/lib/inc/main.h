@@ -30,7 +30,7 @@
 #define __MAIN_H
 
 /* definition of fast or default standard mode (bus speed up to 400 or 100 kHz) */
-#define FAST_I2C_MODE
+// #define FAST_I2C_MODE
 
 #ifdef FAST_I2C_MODE
 #define I2C_SPEED 300000

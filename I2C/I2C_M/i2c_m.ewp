@@ -16,7 +16,7 @@
                 <debug>1</debug>
                 <option>
                     <name>GenDeviceSelectMenu</name>
-                    <state>UnspecifiedSTM8	STM8 - Unspecified</state>
+                    <state>STM8S003F3	STM8S003F3</state>
                 </option>
                 <option>
                     <name>GenCodeModel</name>
@@ -256,8 +256,8 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>C:\Users\Administrator\Desktop\公司人员\林滋钧\STM8S\I2C\I2C_M\lib\inc</state>
-                    <state>C:\Users\Administrator\Desktop\公司人员\林滋钧\STM8S\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\inc</state>
+                    <state>C:\Users\Administrator\Desktop\STM8S\I2C\I2C_M\lib\inc</state>
+                    <state>C:\Users\Administrator\Desktop\STM8S\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1617,6 +1617,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\src\stm8s_i2c.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\src\stm8s_uart1.c</name>
         </file>
     </group>
     <file>

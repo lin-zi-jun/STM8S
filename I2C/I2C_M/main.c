@@ -73,8 +73,12 @@ void main()
 #endif
 
   /* Initialize LEDs mounted on STM8/128-EVAL board */
-
-
+ UART1_DeInit();
+ UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
+              UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
+ 
+ 
+ 
   /* I2C Initialize */
   I2C_Init(I2C_SPEED, 0xA0, I2C_DUTYCYCLE_2, I2C_ACK_CURR, I2C_ADDMODE_7BIT, 16);
 
@@ -238,6 +242,7 @@ void main()
   {
     while (1)
     {
+      UART1_SendData8('1');
       Delay(0x7FFF);
     }
   }
@@ -245,6 +250,7 @@ void main()
   {
     while (1)
     {
+      UART1_SendData8('2');
       Delay(0x7FFF);
     }
   }

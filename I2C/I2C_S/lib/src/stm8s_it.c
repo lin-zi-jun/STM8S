@@ -41,6 +41,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 __IO uint8_t Slave_Buffer_Rx[255];
+__IO uint8_t T_buf;
 __IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 __IO uint16_t Event = 0x00;
 /* Private function prototypes -----------------------------------------------*/
@@ -400,6 +401,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 
   }
   Event = I2C_GetLastEvent();
+  // UART1_SendData8(Event);
   switch (Event)
   {
       /******* Slave transmitter ******/
@@ -411,7 +413,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* check on EV3 */
     case I2C_EVENT_SLAVE_BYTE_TRANSMITTING:
       /* Transmit data */
-      I2C_SendData(Slave_Buffer_Rx[Tx_Idx++]);
+       I2C_SendData(T_buf);
       break;
       /******* Slave receiver **********/
       /* check on EV1*/
@@ -420,7 +422,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
-      Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
+      T_buf = I2C_ReceiveData();
       break;
 
       /* Check on EV4 */
