@@ -3,5 +3,8 @@
     <project>
         <path>$WS_DIR$\I2C_S.ewp</path>
     </project>
+    <project>
+        <path>$WS_DIR$\..\..\Time_PWM\RGB_PWM.ewp</path>
+    </project>
     <batchBuild />
 </workspace>
