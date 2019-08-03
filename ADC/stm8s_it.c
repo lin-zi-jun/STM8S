@@ -413,60 +413,8 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
   */
  INTERRUPT_HANDLER(ADC2_IRQHandler, 22)
  {
-    /* In order to detect unexpected events during development,
-       it is recommended to set a breakpoint on the following instruction.
-    */
-    
-    /* Get converted value */
-    Conversion_Value = ADC2_GetConversionValue();
 
-    if (Conversion_Value == 0x0)
-    {
-        /* Turn off LED1..4*/
-        STM_EVAL_LEDOff(LED1);
-        STM_EVAL_LEDOff(LED2);
-        STM_EVAL_LEDOff(LED3);
-        STM_EVAL_LEDOff(LED4);
-     }
-    else if ((Conversion_Value <= 0xFF) && (Conversion_Value > 0x0))
-    {
-        /* Turn on LED1 */
-        STM_EVAL_LEDOn(LED1);
-        
-        /* Turn off LED2..4 */
-        STM_EVAL_LEDOff(LED2);
-        STM_EVAL_LEDOff(LED3);
-        STM_EVAL_LEDOff(LED4);
-    }
-    else if ((Conversion_Value >= 0x100) && (Conversion_Value <= 0x1FF))
-    {
-        /* Turn on LED1 and LED2 */
-        STM_EVAL_LEDOn(LED1);
-        STM_EVAL_LEDOn(LED2);
-        
-        /* Turn off LED3 and LED4 */
-        STM_EVAL_LEDOff(LED3);
-        STM_EVAL_LEDOff(LED4);
-    }
-    else if ((Conversion_Value >= 0x200) && (Conversion_Value <= 0x2FF))
-    {
-        /* Turn on LED1..3 */
-        STM_EVAL_LEDOn(LED1);
-        STM_EVAL_LEDOn(LED2);
-        STM_EVAL_LEDOn(LED3);
-        
-        /* Turn off LED4 */
-        STM_EVAL_LEDOff(LED4);
-    }
-    else
-    {
-        /* Turn on LED1..4*/
-        STM_EVAL_LEDOn(LED1);
-        STM_EVAL_LEDOn(LED2);
-        STM_EVAL_LEDOn(LED3);
-        STM_EVAL_LEDOn(LED4);
-    }
-    ADC2_ClearITPendingBit();
+
  }
 #else /*STM8S105, STM8S103 or STM8S903 or STM8AF626x */
 /**
@@ -476,8 +424,10 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
   */
  INTERRUPT_HANDLER(ADC1_IRQHandler, 22)
  {
-    Conversion_Value = ADC1_GetConversionValue();
+   SendrStr("------\r\n");
     ADC1_ClearITPendingBit(ADC1_IT_AWS3);
+    Conversion_Value = ADC1_GetConversionValue();
+   
  }
 #endif /*STM8S208 or STM8S207 or STM8AF52Ax or STM8AF62Ax */
 

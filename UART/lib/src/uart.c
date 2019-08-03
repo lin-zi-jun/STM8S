@@ -2,10 +2,6 @@
 #include <stdarg.h>
 #include "stm8s.h"
 
-
-#define KB2ASC(x)	 (u8)(0x30+x)
-#define ASC2KB(x)	 (u8)(x%(0x30))
-
 void SendrStr(const  char *ptr)
 {
     do
@@ -17,20 +13,39 @@ void SendrStr(const  char *ptr)
 
 
 
-
-int CharToInt(char cIn)
+int Bit_Int(long n)
 {
-        int nRet = cIn;
+	long bit=0;
+	if(n==0)
+		return 1;
+	while(n)
+	{
+		bit++;
+		n/=10;
+	}
+	return bit;
+}
 
-        if(nRet > 47 && nRet < 58)
-                nRet -= 48;
-        else if (nRet > 64 && nRet < 71)
-                nRet -= 55;
-        else if (nRet > 96 && nRet < 103)
-                nRet -= 87;
-        else
-                nRet = 0;
+void INT_printf(long num){
+      char buf[20]={0};
+      int Bit = 0,i;
+      long sum = 1,n1,n2;
 
-        return nRet;
+      Bit = Bit_Int(num);
+              
+      for(i=1;i<Bit;i++){
+              sum = sum*10;
+      }
+
+      buf[0]  = num/sum+0x30; 
+      n1 = sum;
+      n2 = sum/10;
+      for(i=1;i<Bit;i++){
+          buf[i]  = num%n1/n2+0x30;
+          n1=n1/10;
+          n2=n2/10; 
+      }
+
+      SendrStr(buf);
 }
 
