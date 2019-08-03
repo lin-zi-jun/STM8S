@@ -36,22 +36,16 @@ uint16_t getADCValue(uint8_t channel)
 void main(void)
 {
     uint16_t Adc_Val=0,i=0;
-    char buf[10]={0};
     UART1_DeInit();
     UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
                                 UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
   while (1){
     
-   //Adc_Val = getADCValue(ADC1_SCHMITTTRIG_CHANNEL3);
-    int nValue=1234;
-    buf[0]  = nValue/1000+0x30; 
-    buf[1]  = (nValue%1000)+0x30; 
-    buf[2]  = (nValue%100)+0x30; 
-    buf[3]  = nValue%10+0x30;
-    
-   SendrStr(buf);
+   Adc_Val = getADCValue(ADC1_SCHMITTTRIG_CHANNEL3);
+  
+   INT_printf(Adc_Val);
    SendrStr("\r\n");
-   i=100000;
+   i=60000;
    while(i--);
   }
 }
