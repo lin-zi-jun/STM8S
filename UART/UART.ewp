@@ -256,7 +256,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>C:\Users\Administrator\Desktop\STM8S\I2C\I2C_M\lib\inc</state>
+                    <state>C:\Users\Administrator\Desktop\STM8S\UART\lib\inc</state>
                     <state>C:\Users\Administrator\Desktop\STM8S\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\inc</state>
                 </option>
                 <option>
