@@ -23,9 +23,9 @@ param([String]$debugfile = "");
 
 if ($debugfile -eq "")
 {
-& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Administrator\Desktop\STM8S\GPIO\settings\GPIO.Debug.general.xcl" --backend -f "C:\Users\Administrator\Desktop\STM8S\GPIO\settings\GPIO.Debug.driver.xcl" 
+& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\linzijun\Desktop\STM8S\GPIO\settings\GPIO.Debug.general.xcl" --backend -f "C:\Users\linzijun\Desktop\STM8S\GPIO\settings\GPIO.Debug.driver.xcl" 
 }
 else
 {
-& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Administrator\Desktop\STM8S\GPIO\settings\GPIO.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\Administrator\Desktop\STM8S\GPIO\settings\GPIO.Debug.driver.xcl" 
+& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\linzijun\Desktop\STM8S\GPIO\settings\GPIO.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\linzijun\Desktop\STM8S\GPIO\settings\GPIO.Debug.driver.xcl" 
 }

@@ -18,13 +18,13 @@ void main(void)
   enableInterrupts();
 
   int i = 0,j=0;
+  //char* T_buf= "stm8_send to esp32";
   while (1)
   {
     i=10;
     j=10;
     while(i--)
     while(j--);
-    //UART1_SendData8('-');
   }
 }
 

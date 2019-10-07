@@ -413,7 +413,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* check on EV3 */
     case I2C_EVENT_SLAVE_BYTE_TRANSMITTING:
       /* Transmit data */
-       I2C_SendData(T_buf);
+       //I2C_SendData(T_buf);
       break;
       /******* Slave receiver **********/
       /* check on EV1*/
@@ -423,6 +423,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
       T_buf = I2C_ReceiveData();
+      UART1_SendData8(T_buf);
       break;
 
       /* Check on EV4 */
