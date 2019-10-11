@@ -15,21 +15,20 @@ void delay_ms(int ii);
 
 void main(void)
 {
-  TIM1_Config();
+ // TIM1_Config();
   TIM2_Config();
   
   while (1)
   {
   
-      T1_RGB_VAL(1,1,25);
-      T2_RGB_VAL(1,1,25);
-      delay_ms(10000);
-      T1_RGB_VAL(1,25,1);
-      T2_RGB_VAL(1,25,1);
-      delay_ms(10000);
-      T1_RGB_VAL(25,1,1);
-      T2_RGB_VAL(25,1,1);
-      delay_ms(10000);
+      T2_RGB_VAL(0,0,255);
+      delay_ms(1000);
+     
+      T2_RGB_VAL(0,255,0);
+      delay_ms(1000);
+  
+      T2_RGB_VAL(255,0,0);
+      delay_ms(1000);
   } 
 }
 

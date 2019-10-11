@@ -40,8 +40,10 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-__IO uint8_t Slave_Buffer_Rx[255];
+__IO uint32_t Slave_Buffer_Rx[12];
+__IO uint32_t Slave_Buffer_Rx_led;
 __IO uint8_t T_buf;
+extern int led_status;
 __IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 __IO uint16_t Event = 0x00;
 /* Private function prototypes -----------------------------------------------*/
@@ -391,7 +393,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
   */
 INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 {
-  /* Read SR2 register to get I2C error */
+  static uint8_t i = 0,Flag=0;
   if ((I2C->SR2) != 0)
   {
     /* Clears SR2 register */
@@ -423,7 +425,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
       T_buf = I2C_ReceiveData();
-      UART1_SendData8(T_buf);
+      led_status=1;
       break;
 
       /* Check on EV4 */
