@@ -2,20 +2,24 @@
 #include "uart.h"
 #include <stdarg.h>
 
-int i =5 ;
-char str[10];
+u8 str[10];
+int i = 0;
 void main(void)
 {
-  uint16_t num;
   CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); 
-  UART1_DeInit();
-  UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
-              UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
+  UART_Initializes();
   while (1)
   {
-      num = 65112;
-      INT_printf(num);
-       SendrStr("\r\n");
+      while(RingBufRead(&str[i]) == 0){
+         i++;
+      }
+      
+      SendrStr(str);
+      if(str[0]=='1'){
+          SendrStr("1");
+      }else if(str[0]=='2'){
+        SendrStr("2");
+      }
   }
 }
 

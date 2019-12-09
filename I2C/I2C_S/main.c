@@ -4,6 +4,28 @@
 #include "uart.h"
 #include <stdarg.h>
 
+static void TIM1_Config(void)
+{
+  TIM1_DeInit();
+  TIM1_TimeBaseInit(0, TIM1_COUNTERMODE_UP, 255, 0);
+  TIM1_Cmd(ENABLE);
+  TIM1_CtrlPWMOutputs(ENABLE);
+}
+
+void T1_RGB_VAL(uint8_t R,uint8_t G,uint8_t B){
+    
+    TIM1_OC1Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_ENABLE,   //1-1 PC6 R
+                R, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
+               TIM1_OCNIDLESTATE_RESET); 
+ 
+   TIM1_OC2Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_ENABLE,   //1-2  PC7 G
+                G,TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET, 
+               TIM1_OCNIDLESTATE_RESET);
+   
+   TIM2_OC2Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,B,TIM2_OCPOLARITY_LOW);    //2-2 PD3  B
+
+}
+
 static void TIM2_Config(void)
 {
   TIM2_DeInit();
@@ -13,9 +35,13 @@ static void TIM2_Config(void)
 
 void T2_RGB_VAL(uint8_t R,uint8_t G,uint8_t B){
     
-  TIM2_OC1Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,R,TIM2_OCPOLARITY_LOW); //PD4
-  TIM2_OC2Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,G,TIM2_OCPOLARITY_LOW); //PD3
-  TIM2_OC3Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,B,TIM2_OCPOLARITY_LOW); //PA3
+  TIM2_OC3Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,R,TIM2_OCPOLARITY_LOW);                //PA3    2-3 R
+  TIM1_OC3Init(TIM1_OCMODE_PWM2, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_ENABLE,             //PC3    1-3 G
+                G, TIM1_OCPOLARITY_LOW, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
+                TIM1_OCNIDLESTATE_RESET);
+  TIM2_OC1Init(TIM2_OCMODE_PWM2, TIM2_OUTPUTSTATE_ENABLE,B,TIM2_OCPOLARITY_LOW);                //PC5    2-1 B
+
+  
 }
 
 int i=0,j=0;
@@ -38,8 +64,9 @@ void main(void)
   bool Flag;
   int i=0,j=0,k=0;
   CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+  TIM1_Config();
   TIM2_Config();
-  
+  GPIO_Init(GPIOD,GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST);
   UART1_DeInit();
   UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
               UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
@@ -72,12 +99,36 @@ void main(void)
           if(T_buf=='#'){
                Flag=0;
                i=0;
-               T2_RGB_VAL(red_led_val,green_led_val,blue_led_val);
+               if((red_led_val==0xED)&&(green_led_val==0xCB)&&(blue_led_val==0xA9)){
+                   GPIO_WriteHigh(GPIOD,GPIO_PIN_4);
+                   SendrStr("aa");
+               }else if((red_led_val==0x9A)&&(green_led_val==0xBC)&&(blue_led_val==0xDE)){
+                   GPIO_WriteLow(GPIOD,GPIO_PIN_4);
+                   SendrStr("bb");
+               }else{
+                  T2_RGB_VAL(red_led_val,green_led_val,blue_led_val);
+                  T1_RGB_VAL(red_led_val,green_led_val,blue_led_val);
+               }
           }
           led_status=0;
       }
-       T2_RGB_VAL(0,0,0);
-       
+    
+    /*
+      T2_RGB_VAL(255,255,0);
+      delay_ms(10000);
+      T2_RGB_VAL(0,255,255);
+      delay_ms(10000);
+      T2_RGB_VAL(255,0,255);
+      delay_ms(10000);
+      
+      //T1_RGB_VAL(255,255,0);
+      //delay_ms(10000);
+      //T1_RGB_VAL(0,255,255);
+      //delay_ms(10000);
+     // T1_RGB_VAL(255,0,255);
+      //delay_ms(10000);
+    */
+     
   }
 }
 

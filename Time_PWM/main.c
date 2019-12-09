@@ -21,13 +21,13 @@ void main(void)
   while (1)
   {
   
-      T2_RGB_VAL(0,0,255);
+      T2_RGB_VAL(125,125,125);
       delay_ms(1000);
      
-      T2_RGB_VAL(0,255,0);
+     // T2_RGB_VAL(0,125,0);
       delay_ms(1000);
   
-      T2_RGB_VAL(255,0,0);
+      //T2_RGB_VAL(125,0,0);
       delay_ms(1000);
   } 
 }
